@@ -57,16 +57,6 @@ Required by L<Dist::Zilla::Role::InstallTool>.
 
 =back
 
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
-
 =head1 SEE ALSO
 
 L<Dist::Zilla>
