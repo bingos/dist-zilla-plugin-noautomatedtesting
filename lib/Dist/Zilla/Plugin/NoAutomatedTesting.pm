@@ -8,7 +8,10 @@ with 'Dist::Zilla::Role::InstallTool';
 sub setup_installer {
   my $self = shift;
   my ($mfpl) = grep { $_->name eq 'Makefile.PL' } @{ $self->zilla->files };
-  return unless $mfpl;
+  
+  $self->log_fatal('No Makefile.PL was found. [NoAutomatedTesting] should appear in dist.ini after [MakeMaker]!')
+    unless $mfpl;
+
   my $content = 'exit 0 if $ENV{AUTOMATED_TESTING};' . "\n";
   $mfpl->content( $content . $mfpl->content );
   return;
