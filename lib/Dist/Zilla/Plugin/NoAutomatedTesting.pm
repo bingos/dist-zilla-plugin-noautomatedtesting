@@ -7,13 +7,17 @@ with 'Dist::Zilla::Role::InstallTool';
 
 sub setup_installer {
   my $self = shift;
-  my ($mfpl) = grep { $_->name eq 'Makefile.PL' } @{ $self->zilla->files };
-  
-  $self->log_fatal('No Makefile.PL was found. [NoAutomatedTesting] should appear in dist.ini after [MakeMaker]!')
-    unless $mfpl;
+
+  my @build_files  = grep { $_->name eq 'Makefile.PL' or $_->name eq 'Build.PL' } @{ $self->zilla->files };
+
+  $self->log_fatal('No Makefile.PL or Build.PL was found. [NoAutomatedTesting] should appear in dist.ini after your installer plugin!')
+    unless @build_files;
 
   my $content = 'exit 0 if $ENV{AUTOMATED_TESTING};' . "\n";
-  $mfpl->content( $content . $mfpl->content );
+  foreach my $file (@build_files)
+  {
+    $file->content( $content . $file->content );
+  }
   return;
 }
 
